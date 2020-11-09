@@ -138,7 +138,5 @@ public class UsuariosService {
 		List<Usuario> lista = miUsuarioDao.listarUsuarios();
 		return lista;
 	}
-	
-
-	
+		
 }
