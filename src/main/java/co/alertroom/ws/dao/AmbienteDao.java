@@ -25,4 +25,34 @@ public class AmbienteDao {
 		return listadoAmbientesVo;
 	}
 
+	public AmbienteVo consultarAmbiente(String idAmbiente) {
+		co.jjortiz.dao.AmbientesDAO ambienteDaoJpa = new co.jjortiz.dao.AmbientesDAO ();
+		AmbienteAdapter miAmbienteAdapter = new AmbienteAdapter();
+		Ambiente miAmbienteJPA = ambienteDaoJpa.consultarAmbiente(idAmbiente);
+		AmbienteVo miAmbienteVo = miAmbienteAdapter.asignarAmbiente(miAmbienteJPA); 
+		
+		return miAmbienteVo;
+	}
+
+	public String eliminarAmbiente(String idAmbiente) {
+		String res = "Ambiente no encontrada";
+		co.jjortiz.dao.AmbientesDAO ambienteDaoJpa = new co.jjortiz.dao.AmbientesDAO ();
+		Ambiente miAmbiente  = ambienteDaoJpa.consultarAmbiente(idAmbiente);
+		if (miAmbiente==null) {
+			ambienteDaoJpa.close();
+			 return res;			
+		}else {
+			System.out.println("4");
+			res  = ambienteDaoJpa.eliminarAmbiente(miAmbiente);
+			ambienteDaoJpa.close();
+			return res;
+		}
+	}
+
+	public Ambiente actualizarAmbiente(Ambiente ambiente) {
+		co.jjortiz.dao.AmbientesDAO ambienteDaoJpa = new co.jjortiz.dao.AmbientesDAO ();
+		return ambienteDaoJpa.actualizarAmbiente(ambiente);
+	}
+
+
 }

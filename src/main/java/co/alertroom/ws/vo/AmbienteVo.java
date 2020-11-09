@@ -9,7 +9,6 @@ public class AmbienteVo {
 	
 	private String nombre;
 	
-	private String numero;
 
 	private String estado;
 
@@ -21,11 +20,14 @@ public class AmbienteVo {
 		this.setListaInventarioAmbiente(new ArrayList<InventarioAmbienteVo>());
 	}
 
-	public AmbienteVo(String id, String nombre, String numero, String estado, String ocupado) {
+	public AmbienteVo(String id) {
+		this.id = id;
+	}
+	
+	public AmbienteVo(String id, String nombre, String estado, String ocupado) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.numero = numero;
 		this.estado = estado;
 		this.ocupado = ocupado;
 		this.setListaInventarioAmbiente(new ArrayList<InventarioAmbienteVo>());
@@ -45,14 +47,6 @@ public class AmbienteVo {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
 	}
 
 	public String getEstado() {
