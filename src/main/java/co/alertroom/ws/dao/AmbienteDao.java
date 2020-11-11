@@ -18,7 +18,6 @@ public class AmbienteDao {
 	public List<AmbienteVo> obtenerListaAmbientes() {
 		co.jjortiz.dao.AmbientesDAO ambienteDaoJpa = new co.jjortiz.dao.AmbientesDAO ();
 		AmbienteAdapter miAmbienteAdapter =  new AmbienteAdapter();
-		
 		List<Ambiente> listadoAmbientesJpa = ambienteDaoJpa.obtenerListaAmbientes();
 		List<AmbienteVo> listadoAmbientesVo = miAmbienteAdapter.asignarListaAmbiente(listadoAmbientesJpa);
 		ambienteDaoJpa.close();
@@ -30,7 +29,7 @@ public class AmbienteDao {
 		AmbienteAdapter miAmbienteAdapter = new AmbienteAdapter();
 		Ambiente miAmbienteJPA = ambienteDaoJpa.consultarAmbiente(idAmbiente);
 		AmbienteVo miAmbienteVo = miAmbienteAdapter.asignarAmbiente(miAmbienteJPA); 
-		
+		ambienteDaoJpa.close();
 		return miAmbienteVo;
 	}
 
@@ -42,7 +41,6 @@ public class AmbienteDao {
 			ambienteDaoJpa.close();
 			 return res;			
 		}else {
-			System.out.println("4");
 			res  = ambienteDaoJpa.eliminarAmbiente(miAmbiente);
 			ambienteDaoJpa.close();
 			return res;
@@ -54,5 +52,24 @@ public class AmbienteDao {
 		return ambienteDaoJpa.actualizarAmbiente(ambiente);
 	}
 
-
+	public AmbienteVo consultarAmbienteInstructor(String idAmbiente) {
+		co.jjortiz.dao.AmbientesDAO ambienteDaoJpa = new co.jjortiz.dao.AmbientesDAO ();
+		AmbienteAdapter miAmbienteAdapter = new AmbienteAdapter();
+		Ambiente miAmbienteJPA = ambienteDaoJpa.consultarAmbiente(idAmbiente);
+		
+		if(miAmbienteJPA != null) {
+			if (miAmbienteJPA.getOcupado().equals("N")) {
+				AmbienteVo miAmbienteVo = miAmbienteAdapter.asignarAmbiente(miAmbienteJPA);
+				ambienteDaoJpa.close();
+				return miAmbienteVo;
+			}else {
+				AmbienteVo miAmbienteVo = miAmbienteAdapter.asignarAmbienteInstructor(miAmbienteJPA);
+				ambienteDaoJpa.close();
+				return miAmbienteVo;
+			}			
+		}else {
+			ambienteDaoJpa.close();
+			return null;
+		}
+	}
 }

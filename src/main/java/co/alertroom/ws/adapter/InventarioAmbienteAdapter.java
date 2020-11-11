@@ -11,7 +11,6 @@ public class InventarioAmbienteAdapter {
 
 	public List<InventarioAmbienteVo> asignarListaInventarioAmbiente(List<InventarioAmbiente> list , String idAmbiente) {
 		List<InventarioAmbienteVo> miListaInventarioAmbiente = new ArrayList<InventarioAmbienteVo>();
-		
 		for (InventarioAmbiente inventarioAmbienteVo : list) {
 			miListaInventarioAmbiente.add(asignarInventario(inventarioAmbienteVo, idAmbiente));
 		}
@@ -19,19 +18,15 @@ public class InventarioAmbienteAdapter {
 	}
 
 	private InventarioAmbienteVo asignarInventario(InventarioAmbiente inventarioAmbiente, String idAmbiente) {
-
 		InventarioAmbienteVo miInventarioAmbiente = null;
 		if (inventarioAmbiente != null) {
 			miInventarioAmbiente   = new InventarioAmbienteVo();
 			miInventarioAmbiente.setCantidad(inventarioAmbiente.getCantidad());
 			miInventarioAmbiente.setIdambienteinventario(inventarioAmbiente.getIdambienteinventario());
 			miInventarioAmbiente.setIdAmbiente(new AmbienteVo(idAmbiente));
-			
 			ArticuloAdapter miArticuloAdapter = new ArticuloAdapter();
 			miInventarioAmbiente.setIdArticulo(miArticuloAdapter.asignarArticulo(inventarioAmbiente.getIdArticulo()));
-			System.out.println();
 		}
-		
 		return miInventarioAmbiente;
 	}
 

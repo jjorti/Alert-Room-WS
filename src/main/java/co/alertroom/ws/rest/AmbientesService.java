@@ -64,6 +64,23 @@ public class AmbientesService {
 		}
 	}
 	
+	@GET
+	@Path("/instructor-consultar/{idambiente}")
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response consultarAmbienteInstructor(@PathParam("idambiente") String idAmbiente) {
+		try {
+			AmbienteVo miAmbiente = ambienteDao.consultarAmbienteInstructor(idAmbiente);
+			if (miAmbiente != null ) {
+				
+				return Response.ok().entity(miAmbiente).build();
+			}else {
+				return Response.status(Response.Status.NOT_FOUND).build();
+			}
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
 	@DELETE
 	@Path("/{idambiente}")
 	public Response eliminarAmbiente(@PathParam("idambiente") String idAmbiente) {
@@ -81,7 +98,6 @@ public class AmbientesService {
 		
 	}
 	
-	
 	@POST
 	@Path("/actualizar")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -96,10 +112,18 @@ public class AmbientesService {
 				return Response.status(Response.Status.NOT_FOUND).build();
 			}
 			
-			
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
+	@GET
+	@Path("/listar-guardas")
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<AmbienteVo> consultarAmbientesGuarda(){
+		List<AmbienteVo> listaAmbienteGuarda = ambienteDao.obtenerListaAmbientes();
+		return listaAmbienteGuarda;	
+	}
+	
+	
 }

@@ -11,35 +11,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import co.alertroom.ws.dao.SolicitudDao;
+import co.alertroom.ws.vo.SolicitudVo;
 import co.jjortiz.entidades.Solicitud;
 
 @Path("/solicitudes")
 public class SolicitudService {
 
 	SolicitudDao solicitudDao = new SolicitudDao();
-//	
-//	@GET
-//	@Path("{idAmbiente}")
-//	public Response solicitarLlaves(@PathParam("idAmbiente") String idAmbiente) {
-//		try {
-//			String res = solicitudDao.solicitarLlaves(idAmbiente);
-//			if (res.equals("ok")) {
-//				return Response.ok().build();				
-//			}else {
-//				return Response.status(Response.Status.NOT_FOUND).build();	
-//			}
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-//		}
-//	}
 	
 	@GET
 	@Path("/listarSolicitudes")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Solicitud> listarAmbientes() {
-		List<Solicitud> lista = solicitudDao.obtenerListaSolicitud();
+	public List<SolicitudVo> listarAmbientes() {
+		List<SolicitudVo> lista = solicitudDao.obtenerListaSolicitud();
 		return lista;
 	}
 	

@@ -12,7 +12,6 @@ import co.jjortiz.entidades.Usuario;
 public class UsuarioDao {
 
 	public UsuarioVo consultarLoginUsuario(String id, String contrasena) {
-		
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa= new UsuariosDAO();
 		Usuario usuarioJpa = usuarioDaoJpa.consultarLoginUsuario(id,contrasena);
 		UsuarioAdapter usuarioAdapter = new UsuarioAdapter();
@@ -22,13 +21,11 @@ public class UsuarioDao {
 	}
 
 	public String registrarUsuario(UsuarioVo usuarioVo) {
-		
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa= new UsuariosDAO();
 		String mensaje="";
 		UsuarioAdapter usuarioAdapter = new UsuarioAdapter();
 		Usuario usuarioJpa = usuarioAdapter.obtenerUsuario(usuarioVo);
 		mensaje=usuarioDaoJpa.registrarUsuario(usuarioJpa);
-		
 		usuarioDaoJpa.close();
 		return mensaje;
 	}
@@ -48,11 +45,9 @@ public class UsuarioDao {
 
 	public UsuarioVo consultarUsuario(String documento) {
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa= new UsuariosDAO();
-		
 		Usuario usuarioJpa=usuarioDaoJpa.consultarUsuario(documento);
 		UsuarioAdapter usuarioAdapter = new UsuarioAdapter();
 		UsuarioVo usuarioVo = usuarioAdapter.asignarUsuario(usuarioJpa);
-	
 		usuarioDaoJpa.close();
 		return usuarioVo;
 	}
@@ -60,9 +55,7 @@ public class UsuarioDao {
 	
 
 	public UsuarioVo actualizarEstado(String documento) {
-		
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa= new UsuariosDAO();
-		
 		Usuario usuarioJpa=usuarioDaoJpa.consultarUsuario(documento);
 		UsuarioAdapter usuarioAdapter = new UsuarioAdapter();
 		UsuarioVo usuarioVo=usuarioAdapter.actualizarEstado(usuarioJpa);

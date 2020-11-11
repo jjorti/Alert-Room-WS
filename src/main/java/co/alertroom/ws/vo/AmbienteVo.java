@@ -3,6 +3,8 @@ package co.alertroom.ws.vo;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.jjortiz.entidades.Solicitud;
+
 public class AmbienteVo {
 
 	private String id;
@@ -16,8 +18,11 @@ public class AmbienteVo {
 
 	private List<InventarioAmbienteVo> listaInventarioAmbiente;
 	
+	private List<SolicitudVo> listaSolicitudes;
+	
 	public AmbienteVo() {
 		this.setListaInventarioAmbiente(new ArrayList<InventarioAmbienteVo>());
+		this.setListaSolicitudes(new ArrayList<SolicitudVo>());
 	}
 
 	public AmbienteVo(String id) {
@@ -71,6 +76,14 @@ public class AmbienteVo {
 
 	public void setListaInventarioAmbiente(List<InventarioAmbienteVo> listaInventarioAmbiente) {
 		this.listaInventarioAmbiente = listaInventarioAmbiente;
+	}
+
+	public List<SolicitudVo> getListaSolicitudes() {
+		return listaSolicitudes;
+	}
+
+	public void setListaSolicitudes(List<SolicitudVo> listaSolicitudes) {
+		this.listaSolicitudes = listaSolicitudes;
 	}
 	
 }

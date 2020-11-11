@@ -10,24 +10,12 @@ public class AmbienteAdapter {
 	
 	public AmbienteVo asignarAmbiente(co.jjortiz.entidades.Ambiente ambiente) {
 		AmbienteVo miAmbiente = null;
-			
-		
 		if (ambiente!=null) {
-			miAmbiente = new AmbienteVo();
-			miAmbiente.setId(ambiente.getId());
-			miAmbiente.setNombre(ambiente.getNombre());
-			miAmbiente.setEstado(ambiente.getEstado());
-			miAmbiente.setOcupado(ambiente.getOcupado());
-			
+			miAmbiente = asignar(ambiente);
 			InventarioAmbienteAdapter miInventarioAmbienteAdapter =  new InventarioAmbienteAdapter();
-			
 			miAmbiente.setListaInventarioAmbiente(miInventarioAmbienteAdapter.asignarListaInventarioAmbiente(ambiente.getListaInventarioAmbiente(), miAmbiente.getId()));
-			
-			
-			
 		}
 		return miAmbiente;
-		
 	}
 
 	public List<AmbienteVo> asignarListaAmbiente(List<Ambiente> listadoAmbientesJpa) {
@@ -36,5 +24,26 @@ public class AmbienteAdapter {
 			lista.add(asignarAmbiente(ambiente));
 		}
 		return lista;
+	}
+
+	public AmbienteVo asignarAmbienteInstructor(Ambiente miAmbienteJPA) {
+		AmbienteVo miAmbiente = null;
+		if (miAmbienteJPA!=null) {
+			miAmbiente = asignar(miAmbienteJPA);
+			InventarioAmbienteAdapter miInventarioAmbienteAdapter =  new InventarioAmbienteAdapter();
+			miAmbiente.setListaInventarioAmbiente(miInventarioAmbienteAdapter.asignarListaInventarioAmbiente(miAmbienteJPA.getListaInventarioAmbiente(), miAmbiente.getId()));
+			SolicitudAdapter miSolicitudAdapter =  new SolicitudAdapter();
+			miAmbiente.setListaSolicitudes(miSolicitudAdapter.asignarListaSolicitudes(miAmbienteJPA.getListaSolicitudes()));
+		}
+		return miAmbiente;
+	}
+
+	private AmbienteVo asignar(Ambiente miAmbienteJPA) {
+		AmbienteVo miAmbiente = new AmbienteVo();
+		miAmbiente.setId(miAmbienteJPA.getId());
+		miAmbiente.setNombre(miAmbienteJPA.getNombre());
+		miAmbiente.setEstado(miAmbienteJPA.getEstado());
+		miAmbiente.setOcupado(miAmbienteJPA.getOcupado());
+		return miAmbiente;
 	}
 }
