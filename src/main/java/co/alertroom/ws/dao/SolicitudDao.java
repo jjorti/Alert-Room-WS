@@ -36,4 +36,12 @@ public class SolicitudDao{
 		return listaSolicitudes;
 	}
 
+	public List<SolicitudVo> consultarSolicitudAmbiente(String idAmbiente) {
+		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
+		SolicitudAdapter miSolicitudAdapter = new SolicitudAdapter();
+		List<Solicitud> solicitudJPA = solicitudesDaoJpa.obtenerSolicitudesAmbiente(idAmbiente);
+		List<SolicitudVo> solicitudVo =  miSolicitudAdapter.asignarListaSolicitudesGuarda(solicitudJPA);
+		return solicitudVo;
+	}
+
 }

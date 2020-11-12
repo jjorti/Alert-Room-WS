@@ -19,7 +19,7 @@ public class SolicitudAdapter {
 		return null;
 	}
 
-	private SolicitudVo asignarSolicitud(Solicitud solicitud) {
+	public SolicitudVo asignarSolicitud(Solicitud solicitud) {
 		SolicitudVo miSolicitud = new SolicitudVo();
 		miSolicitud = asignar(solicitud);
 		UsuarioAdapter miUsuarioAdapter = new UsuarioAdapter();
@@ -50,7 +50,7 @@ public class SolicitudAdapter {
 		return miListaSolicitudes;
 	}
 
-	private SolicitudVo asignarSolicitudGuarda(Solicitud solicitudJPA) {
+	public  SolicitudVo asignarSolicitudGuarda(Solicitud solicitudJPA) {
 		SolicitudVo miSolicitudVo = new SolicitudVo();
 		miSolicitudVo = asignar(solicitudJPA); 
 		AmbienteAdapter miAmbienteAdapter = new AmbienteAdapter();
