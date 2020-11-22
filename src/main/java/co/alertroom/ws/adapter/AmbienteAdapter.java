@@ -38,12 +38,24 @@ public class AmbienteAdapter {
 		return miAmbiente;
 	}
 
-	private AmbienteVo asignar(Ambiente miAmbienteJPA) {
+	public AmbienteVo asignar(Ambiente miAmbienteJPA) {
 		AmbienteVo miAmbiente = new AmbienteVo();
 		miAmbiente.setId(miAmbienteJPA.getId());
 		miAmbiente.setNombre(miAmbienteJPA.getNombre());
 		miAmbiente.setEstado(miAmbienteJPA.getEstado());
 		miAmbiente.setOcupado(miAmbienteJPA.getOcupado());
+		return miAmbiente;
+	}
+	
+	public Ambiente asignar2(AmbienteVo miAmbienteJPA) {
+		Ambiente miAmbiente = new Ambiente();
+		miAmbiente.setId(miAmbienteJPA.getId());
+		return miAmbiente;
+	}
+
+	public Ambiente asignarId(String id) {
+		Ambiente miAmbiente = new Ambiente();
+		miAmbiente.setId(id);
 		return miAmbiente;
 	}
 }

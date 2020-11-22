@@ -16,8 +16,6 @@ public class UsuarioVo {
 	
 	private String tipoUsuario;
 	
-	private String foto;
-	
 	private String estado;
 	
 
@@ -75,14 +73,6 @@ public class UsuarioVo {
 
 	public void setTipoUsuario(String tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
-	}
-
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
 	}
 
 	public String getEstado() {

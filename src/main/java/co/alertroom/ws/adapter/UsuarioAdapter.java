@@ -22,7 +22,6 @@ public class UsuarioAdapter {
 			miUsuario.setEstado(usuario.getEstado());
 			miUsuario.setTelefono(usuario.getTelefono());
 			miUsuario.setTipoUsuario(usuario.getTipoUsuario());
-			miUsuario.setFoto(usuario.getFoto());
 		}
 		return miUsuario;
 	}
@@ -40,7 +39,6 @@ public class UsuarioAdapter {
 			miUsuario.setEstado(u.getEstado());
 			miUsuario.setTelefono(u.getTelefono());
 			miUsuario.setTipoUsuario(u.getTipoUsuario());
-			miUsuario.setFoto(u.getFoto());
 		}
 		return miUsuario;
 	}
@@ -59,7 +57,6 @@ public class UsuarioAdapter {
 			miUsuario.setEstado(usuario.getEstado());
 			miUsuario.setTelefono(usuario.getTelefono());
 			miUsuario.setTipoUsuario(usuario.getTipoUsuario());
-			miUsuario.setFoto(usuario.getFoto());
 		}
 		return miUsuario;
 	}
@@ -83,11 +80,11 @@ public class UsuarioAdapter {
 			miUsuario.setEstado("I");
 			miUsuario.setTelefono(usuario.getTelefono());
 			miUsuario.setTipoUsuario(usuario.getTipoUsuario());
-			miUsuario.setFoto(usuario.getFoto());
 		}else {
 			
 			System.out.println("ELSE ADAPTER ESTADO = A");
 			miUsuario = new UsuarioVo();
+			miUsuario = asignarUsuario(usuario);
 			miUsuario.setId(usuario.getId());
 			miUsuario.setNombres(usuario.getNombres());
 			miUsuario.setApellidos(usuario.getApellidos());
@@ -96,9 +93,18 @@ public class UsuarioAdapter {
 			miUsuario.setEstado("A");
 			miUsuario.setTelefono(usuario.getTelefono());
 			miUsuario.setTipoUsuario(usuario.getTipoUsuario());
-			miUsuario.setFoto(usuario.getFoto());
 	
 			
+		}
+		return miUsuario;
+	}
+	
+	public Usuario obtenerUsuario2(UsuarioVo u) {
+		Usuario miUsuario = null;
+		
+		if (u!=null) {			
+			miUsuario=new Usuario();
+			miUsuario.setId(u.getId());
 		}
 		return miUsuario;
 	}

@@ -7,6 +7,7 @@ import co.alertroom.ws.vo.SolicitudVo;
 import co.jjortiz.dao.AmbientesDAO;
 import co.jjortiz.dao.SolicitudesDAO;
 import co.jjortiz.entidades.Ambiente;
+import co.jjortiz.entidades.Concepto;
 import co.jjortiz.entidades.Solicitud;
 
 public class SolicitudDao{
@@ -42,6 +43,89 @@ public class SolicitudDao{
 		List<Solicitud> solicitudJPA = solicitudesDaoJpa.obtenerSolicitudesAmbiente(idAmbiente);
 		List<SolicitudVo> solicitudVo =  miSolicitudAdapter.asignarListaSolicitudesGuarda(solicitudJPA);
 		return solicitudVo;
+	}
+	
+	public String solicitudNovedad(Solicitud solicitud) {
+		String res = "error";
+		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
+		AmbientesDAO ambientesDaoJpa = new AmbientesDAO();
+		Ambiente miAmbiente = ambientesDaoJpa.consultarAmbiente(solicitud.getIdAmbiente().getId());
+
+		if (miAmbiente != null && !miAmbiente.getOcupado().equals("N")) {	
+			miAmbiente.setOcupado("S");
+			solicitud.setIdAmbiente(miAmbiente);
+			res =solicitudesDaoJpa.solicitudNoveda(solicitud);
+			solicitudesDaoJpa.close();
+			return res;
+		}else {
+			return res;
+		}
+	}
+	
+	public List<SolicitudVo> obtenerListaNovedades() {
+		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
+		SolicitudAdapter miSolicitudAdapter = new SolicitudAdapter();
+		List<Solicitud> listaSolicitudesJPA =  solicitudesDaoJpa.obtenerListaNovedades(6,7);
+		List<SolicitudVo> listaSolicitudes = miSolicitudAdapter.asignarListaSolicitudesGuarda(listaSolicitudesJPA);
+		solicitudesDaoJpa.close();
+		return listaSolicitudes;
+	}
+	
+	//este es el de actualizar el concepto en la solicitud para atender y finalizar
+	public String actualizarSolicitud(int idSolicitud) {
+		String resp="";
+		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
+		Solicitud solicitudJpa=solicitudesDaoJpa.consultarSolicitud(idSolicitud);
+		if (solicitudJpa.getConcepto().getIdConcepto()==6) {
+			Concepto miConcepto= new Concepto();
+			miConcepto.setIdConcepto(7);
+			solicitudJpa.setConcepto(miConcepto);
+			String nombreConcepto="Atender Novedad";
+			solicitudJpa.setObservaciones(nombreConcepto);
+			resp=solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
+			solicitudesDaoJpa.close();
+		} else{
+			if (solicitudJpa.getConcepto().getIdConcepto()==7) {
+				Concepto miConcepto= new Concepto();
+				miConcepto.setIdConcepto(8);
+				solicitudJpa.setConcepto(miConcepto);
+				String nombreConcepto="Finalizar Novedad";
+				solicitudJpa.setObservaciones(nombreConcepto);
+				resp=solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
+				solicitudesDaoJpa.close();
+			}
+			return resp;
+		}	
+		return resp;
+		
+	}
+
+	public List<SolicitudVo> listarSolicitudes() {
+		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
+		SolicitudAdapter miSolicitudAdapter = new SolicitudAdapter();
+		List<Solicitud> listaSolicitudesJPA =  solicitudesDaoJpa.obtenerListadoSolicitudes();
+		List<SolicitudVo> listaSolicitudes = miSolicitudAdapter.asignarListaSolicitudesGuarda(listaSolicitudesJPA);
+		solicitudesDaoJpa.close();
+		return listaSolicitudes;
+
+	}
+
+	public String entregaLlavesInstructor(int idSolicitud) {
+		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
+		Solicitud solicitudJpa = solicitudesDaoJpa.consultarSolicitud(idSolicitud);
+		Concepto miConcepto = new Concepto();
+		miConcepto.setIdConcepto(4);
+		solicitudJpa.setConcepto(miConcepto);
+		return solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
+	}
+
+	public String devolverLlavesGuarda(Integer idSolicitud) {
+		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
+		Solicitud solicitudJpa = solicitudesDaoJpa.consultarSolicitud(idSolicitud);
+		Concepto miConcepto = new Concepto();
+		miConcepto.setIdConcepto(2);
+		solicitudJpa.setConcepto(miConcepto);
+		return solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
 	}
 
 }

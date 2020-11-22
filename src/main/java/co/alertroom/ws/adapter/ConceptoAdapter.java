@@ -12,5 +12,10 @@ public class ConceptoAdapter {
 		miConceptoVo.setAplica(conceptoJPA.getAplica());
 		return  miConceptoVo;
 	}
-
+	
+	public Concepto asignarIdConcepto() {
+		Concepto miConcepto = new Concepto();
+		miConcepto.setIdConcepto(5);
+		return  miConcepto;
+	}
 }

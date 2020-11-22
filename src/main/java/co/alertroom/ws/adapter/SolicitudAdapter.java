@@ -3,6 +3,7 @@ package co.alertroom.ws.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.alertroom.ws.vo.ConceptoVo;
 import co.alertroom.ws.vo.SolicitudVo;
 import co.jjortiz.entidades.Solicitud;
 
@@ -60,6 +61,21 @@ public class SolicitudAdapter {
 		ConceptoAdapter miConceptoAdapter = new ConceptoAdapter();
 		miSolicitudVo.setConcepto(miConceptoAdapter.asignar(solicitudJPA.getConcepto()));
 		return miSolicitudVo;
+	}
+	
+	
+	//Preguntar donde usa este metodo
+	public SolicitudVo actualizarSolicitud(Solicitud solicitudJpa) {
+		SolicitudVo misolicitud = null;
+
+		if (solicitudJpa != null && solicitudJpa.getConcepto().equals(6)) {
+			System.out.println("IF ADAPTER ESTADO = A");
+			ConceptoVo miConcepto=new ConceptoVo();
+			miConcepto.setIdConcepto(7);
+			misolicitud = new SolicitudVo();
+			misolicitud.setConcepto(miConcepto);
+		}
+		return misolicitud;
 	}
 
 
