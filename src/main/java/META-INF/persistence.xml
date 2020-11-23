@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="AlertRoom"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>co.jjortiz.entidades.Ambiente</class>
+		<class>co.jjortiz.entidades.Articulo</class>
+		<class>co.jjortiz.entidades.Concepto</class>
+		<class>co.jjortiz.entidades.InventarioAmbiente</class>
+		<class>co.jjortiz.entidades.Novedad</class>
+		<class>co.jjortiz.entidades.Solicitud</class>
+		<class>co.jjortiz.entidades.Usuario</class>
+		<!-- <class> com.alert_room.model.Usuario</class> -->
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"	value="jdbc:mysql://localhost:3306/alert_room_prueba?
+		useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="hibernate.show_sql" value="drop-and-create" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+		</properties>
+	</persistence-unit>
+</persistence>

@@ -3,7 +3,6 @@
 	<name>AlertRoomWebServices</name>
 	<comment></comment>
 	<projects>
-		<project>AlertRoomJPA</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -21,6 +20,10 @@ public class SolicitudService {
 
 	SolicitudDao solicitudDao = new SolicitudDao();
 	
+	/**
+	 * Servicio que lista las solicitudes con concepto 2 y 4 
+	 * @return lista de solicitudes en el ambiente 
+	 */
 	@GET
 	@Path("/listarSolicitudesAmbiente")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -29,6 +32,10 @@ public class SolicitudService {
 		return lista;
 	}
 	
+	/**
+	 * Servicio que lista las solicitudes de llaves que realiza el instructor y que deben ser atendidas
+	 * @return lista de solicitudes con concepto 1
+	 */
 	@GET
 	@Path("/listarSolicitudes")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -36,41 +43,52 @@ public class SolicitudService {
 		return solicitudDao.listarSolicitudes();
 	}
 	
+	/**
+	 * Servicio que cambia el estado del concepto de una solicitud a llaves entregadas al instructor 
+	 * @param idSolicitud
+	 * @return Respuesta segun el estado de la solicitud
+	 */
 	@GET
 	@Path("/entregaLlavesInstructor/{idSolicitud}")
 	public Response entregarLlavesInstructor(@PathParam("idSolicitud") Integer idSolicitud) {
 		try {
 			String res =  solicitudDao.entregaLlavesInstructor(idSolicitud);
-			
 			if (res.equals("ok")) {
 				return Response.status(Response.Status.OK).build();
 			}else {
 				return Response.status(Response.Status.NOT_FOUND).build();
 			}
-			
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	
+	/**
+	 * Servicio que cambia el estado del concepto de una solicitud a llaves entregadas al guarda
+	 * @param idSolicitud
+	 * @return Respuesta segun el estado de la solicitud
+	 */
 	@GET
 	@Path("/devolverLlavesGuarda/{idSolicitud}")
 	public Response devolverLlavesGuarda(@PathParam("idSolicitud") Integer idSolicitud) {
 		try {
 			String res =  solicitudDao.devolverLlavesGuarda(idSolicitud);
-			
 			if (res.equals("ok")) {
 				return Response.status(Response.Status.OK).build();
 			}else {
 				return Response.status(Response.Status.NOT_FOUND).build();
 			}
-			
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	
 	
+	/**
+	 * Servicio que consulta la lista de solicitudes de un ambiente en especifico
+	 * @param idAmbiente
+	 * @return lista de ambientes consultados
+	 */
 	@GET
 	@Path("/consultarAmbiente/{idambiente}")
 	@Produces({MediaType.APPLICATION_JSON})
@@ -89,6 +107,11 @@ public class SolicitudService {
 		}
 	}
 	
+	/**
+	 * Servicios que recibe un json con la informacion de la solicitud para registrar en la bd y se guarda con concepto 1
+	 * @param solicitud
+	 * @return  Respuesta segun el estado de la solicitud
+	 */
 	@POST
 	@Path("/solicitarllaves")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -107,7 +130,7 @@ public class SolicitudService {
 	}
 	
 	//http://localhost:8080/AlertRoomWebServices/api/solicitudes/actualizarSolicitud/123
-	@PUT
+	@GET
 	@Path("/atenderSolicitud/{id}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response actualizarSolicitud(@PathParam("id") int idSolicitud) {
