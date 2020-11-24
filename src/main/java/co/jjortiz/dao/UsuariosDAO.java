@@ -48,7 +48,7 @@ public class UsuariosDAO implements Serializable{
 			
 			resp="ok";
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 	
 		return resp;

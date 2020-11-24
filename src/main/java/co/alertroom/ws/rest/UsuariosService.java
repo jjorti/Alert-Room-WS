@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response.Status;
 
 import co.alertroom.ws.dao.UsuarioDao;
 import co.alertroom.ws.vo.UsuarioVo;
-
+import co.jjortiz.aplicacion.EnvioEmail;
 import co.jjortiz.entidades.Usuario;
 
 
@@ -61,10 +61,11 @@ public class UsuariosService {
 	@Consumes({MediaType.APPLICATION_JSON})
 	//@Produces({MediaType.APPLICATION_JSON})
 	public Response registrarPersona(UsuarioVo usuarioVo) {
-		System.out.println("Registrar Usuario");
 		try {
 			String res = miUsuarioDao.registrarUsuario(usuarioVo);
 			if (res.equals("ok")) {
+				EnvioEmail miEnvioEmail = new EnvioEmail();
+				miEnvioEmail.sendEmail(usuarioVo);
 				return Response.ok().build();
 				//return Response.status(Response.Status.OK).entity(persona).build();
 			}else {

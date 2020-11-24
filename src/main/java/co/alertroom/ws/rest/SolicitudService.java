@@ -19,7 +19,7 @@ import co.jjortiz.entidades.Solicitud;
 public class SolicitudService {
 
 	SolicitudDao solicitudDao = new SolicitudDao();
-	
+
 	/**
 	 * Servicio que lista las solicitudes con concepto 2 y 4 
 	 * @return lista de solicitudes en el ambiente 
@@ -31,7 +31,7 @@ public class SolicitudService {
 		List<SolicitudVo> lista = solicitudDao.obtenerListaSolicitud();
 		return lista;
 	}
-	
+
 	/**
 	 * Servicio que lista las solicitudes de llaves que realiza el instructor y que deben ser atendidas
 	 * @return lista de solicitudes con concepto 1
@@ -42,7 +42,7 @@ public class SolicitudService {
 	public List<SolicitudVo> listarSolicitudes(){
 		return solicitudDao.listarSolicitudes();
 	}
-	
+
 	/**
 	 * Servicio que cambia el estado del concepto de una solicitud a llaves entregadas al instructor 
 	 * @param idSolicitud
@@ -62,7 +62,7 @@ public class SolicitudService {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	/**
 	 * Servicio que cambia el estado del concepto de una solicitud a llaves entregadas al guarda
 	 * @param idSolicitud
@@ -82,8 +82,31 @@ public class SolicitudService {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
-	
+
+	/**
+	 * Servicios que recibe un json con la informacion de la solicitud para registrar en la bd y se guarda con concepto 1
+	 * @param solicitud
+	 * @return  Respuesta segun el estado de la solicitud
+	 */
+	@POST
+	@Path("/solicitarllaves")
+	@Consumes({MediaType.APPLICATION_JSON})
+	public Response solicitudLlave(Solicitud solicitud) {
+		solicitud.setFechaHora( new Date());
+		System.out.println(solicitud.getFechaHora());
+		
+		try {
+			String res = solicitudDao.solicitudLLaves(solicitud);
+			if (res.equals("ok")) {
+				return Response.ok().build();				
+			}else {
+				return Response.status(Response.Status.NOT_FOUND).build();	
+			}
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
 	/**
 	 * Servicio que consulta la lista de solicitudes de un ambiente en especifico
 	 * @param idAmbiente
@@ -100,35 +123,13 @@ public class SolicitudService {
 			}else {
 				return Response.status(Response.Status.NOT_FOUND).build();
 			}
-			
+
 		} catch (Exception e) {
 
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
-	/**
-	 * Servicios que recibe un json con la informacion de la solicitud para registrar en la bd y se guarda con concepto 1
-	 * @param solicitud
-	 * @return  Respuesta segun el estado de la solicitud
-	 */
-	@POST
-	@Path("/solicitarllaves")
-	@Consumes({MediaType.APPLICATION_JSON})
-	public Response solicitudLlave(Solicitud solicitud) {
-		solicitud.setFechaHora( new Date());
-		try {
-			String res = solicitudDao.solicitudLLaves(solicitud);
-			if (res.equals("ok")) {
-				return Response.ok().build();				
-			}else {
-				return Response.status(Response.Status.NOT_FOUND).build();	
-			}
-		} catch (Exception e) {
-			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-		}
-	}
-	
+
 	//http://localhost:8080/AlertRoomWebServices/api/solicitudes/actualizarSolicitud/123
 	@GET
 	@Path("/atenderSolicitud/{id}")
@@ -146,7 +147,7 @@ public class SolicitudService {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	//http://localhost:8080/AlertRoomWebServices/api/solicitudes/listarNovedades
 	@GET
 	@Path("/listarNovedades")
@@ -155,7 +156,7 @@ public class SolicitudService {
 		List<SolicitudVo> lista = solicitudDao.obtenerListaNovedades();
 		return lista;
 	}
-	
+
 	//http://localhost:8080/AlertRoomWebServices/api/solicitudes/solicitarNovedad
 	@POST
 	@Path("/solicitarNovedad")
@@ -164,6 +165,26 @@ public class SolicitudService {
 		solicitud.setFechaHora( new Date());
 		try {
 			String res = solicitudDao.solicitudNovedad(solicitud);
+			if (res.equals("ok")) {
+				return Response.ok().build();				
+			}else {
+				return Response.status(Response.Status.NOT_FOUND).build();	
+			}
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	//http://localhost:8080/AlertRoomWebServices/api/solicitudes/rotacion/35
+	@POST
+	@Path("/rotacion/{id}")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response rotacionLlaves(@PathParam("id") int idSolicitud, Solicitud solicitud) {
+
+		solicitud.setFechaHora(new Date());
+		try {
+			String res = solicitudDao.rotacionLlaves(idSolicitud, solicitud);
 			if (res.equals("ok")) {
 				return Response.ok().build();				
 			}else {

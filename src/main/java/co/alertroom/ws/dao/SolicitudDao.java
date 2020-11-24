@@ -20,6 +20,7 @@ public class SolicitudDao{
 		if (miAmbiente != null && !miAmbiente.getEstado().equals("I")) {			
 			miAmbiente.setOcupado("S");
 			solicitud.setIdAmbiente(miAmbiente);
+			solicitud.setObservaciones("Llaves solicitadas por instructor");
 			res =solicitudesDaoJpa.solicitudLlaves(solicitud);
 			solicitudesDaoJpa.close();
 			return res;
@@ -113,6 +114,7 @@ public class SolicitudDao{
 	public String entregaLlavesInstructor(int idSolicitud) {
 		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
 		Solicitud solicitudJpa = solicitudesDaoJpa.consultarSolicitud(idSolicitud);
+		solicitudJpa.setObservaciones("Llaves en ambiente");
 		Concepto miConcepto = new Concepto();
 		miConcepto.setIdConcepto(4);
 		solicitudJpa.setConcepto(miConcepto);
@@ -122,10 +124,27 @@ public class SolicitudDao{
 	public String devolverLlavesGuarda(Integer idSolicitud) {
 		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
 		Solicitud solicitudJpa = solicitudesDaoJpa.consultarSolicitud(idSolicitud);
+		solicitudJpa.setObservaciones("Entregó llaves");
+		
+		AmbientesDAO ambientesDaoJpa = new AmbientesDAO();
+		Ambiente miAmbiente = ambientesDaoJpa.consultarAmbiente(solicitudJpa.getIdAmbiente().getId());
+		miAmbiente.setOcupado("N");
+		solicitudJpa.setIdAmbiente(miAmbiente);
+		
 		Concepto miConcepto = new Concepto();
 		miConcepto.setIdConcepto(2);
 		solicitudJpa.setConcepto(miConcepto);
 		return solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
+	}
+
+	public String rotacionLlaves(int idSolicitud, Solicitud solicitud) {
+		String res = "error";
+		res=devolverLlavesGuarda(idSolicitud);
+		if (res.equals("ok")) {
+			res=solicitudLLaves(solicitud);
+			return res;
+		}
+		return res;
 	}
 
 }

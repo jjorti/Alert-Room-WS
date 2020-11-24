@@ -2,6 +2,7 @@ package co.jjortiz.entidades;
 
 import java.util.Date;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +40,7 @@ public class Solicitud {
 	
     @Column(name = "fecha_hora")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonbDateFormat(value ="yyyy-MM-dd HH:mm")
     private Date fechaHora;
     
     @ManyToOne
