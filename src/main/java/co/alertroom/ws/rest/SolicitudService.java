@@ -1,5 +1,7 @@
 package co.alertroom.ws.rest;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -92,8 +94,11 @@ public class SolicitudService {
 	@Path("/solicitarllaves")
 	@Consumes({MediaType.APPLICATION_JSON})
 	public Response solicitudLlave(Solicitud solicitud) {
-		solicitud.setFechaHora( new Date());
-		System.out.println(solicitud.getFechaHora());
+		LocalDateTime date = LocalDateTime.now();
+		Date dateCreacionSolicitud = Date.from(date.atZone(ZoneId.of("UTC")).toInstant());
+		System.out.println(dateCreacionSolicitud);
+		solicitud.setFechaHora( dateCreacionSolicitud);
+
 		
 		try {
 			String res = solicitudDao.solicitudLLaves(solicitud);

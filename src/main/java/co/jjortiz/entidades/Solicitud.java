@@ -2,7 +2,6 @@ package co.jjortiz.entidades;
 
 import java.util.Date;
 
-import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
