@@ -1,6 +1,9 @@
 package co.alertroom.ws.adapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import co.alertroom.ws.vo.ConceptoVo;
@@ -37,11 +40,16 @@ public class SolicitudAdapter {
 	private SolicitudVo asignar(Solicitud solicitudJPA) {
 		SolicitudVo miSolicitud = new SolicitudVo();
 		miSolicitud.setIdSolicitud(solicitudJPA.getIdSolicitud());
-		miSolicitud.setFechaHora(solicitudJPA.getFechaHora());
+		miSolicitud.setFechaHora(parseFecha(solicitudJPA.getFechaHora()));
 		miSolicitud.setObservaciones(solicitudJPA.getObservaciones());
 		return miSolicitud;
 	}
 
+
+	private String parseFecha(Date fechaHora) {
+		DateFormat hourdateFormat = new SimpleDateFormat("HH:mm a dd/MM/yyyy");
+		return hourdateFormat.format(fechaHora);
+	}
 
 	public List<SolicitudVo> asignarListaSolicitudesGuarda(List<Solicitud> listaSolicitudesJPA) {
 		List<SolicitudVo> miListaSolicitudes = new ArrayList<SolicitudVo>();

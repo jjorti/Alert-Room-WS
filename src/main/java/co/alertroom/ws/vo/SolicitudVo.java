@@ -10,7 +10,7 @@ public class SolicitudVo {
 
 	private UsuarioVo idUsuario;
 	
-    private Date fechaHora;
+    private String fechaHora;
     
     private ConceptoVo concepto;
 	
@@ -40,11 +40,11 @@ public class SolicitudVo {
 		this.idUsuario = idUsuario;
 	}
 
-	public Date getFechaHora() {
+	public String getFechaHora() {
 		return fechaHora;
 	}
 
-	public void setFechaHora(Date fechaHora) {
+	public void setFechaHora(String fechaHora) {
 		this.fechaHora = fechaHora;
 	}
 

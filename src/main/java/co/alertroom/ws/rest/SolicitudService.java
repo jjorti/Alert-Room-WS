@@ -94,12 +94,7 @@ public class SolicitudService {
 	@Path("/solicitarllaves")
 	@Consumes({MediaType.APPLICATION_JSON})
 	public Response solicitudLlave(Solicitud solicitud) {
-		LocalDateTime date = LocalDateTime.now();
-		Date dateCreacionSolicitud = Date.from(date.atZone(ZoneId.of("UTC")).toInstant());
-		System.out.println(dateCreacionSolicitud);
-		solicitud.setFechaHora( dateCreacionSolicitud);
-
-		
+		solicitud.setFechaHora( seterarFechaHora() );
 		try {
 			String res = solicitudDao.solicitudLLaves(solicitud);
 			if (res.equals("ok")) {
@@ -110,6 +105,12 @@ public class SolicitudService {
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
+	}
+
+	private Date seterarFechaHora() {
+		LocalDateTime date = LocalDateTime.now();
+		Date dateCreacionSolicitud = Date.from(date.atZone(ZoneId.of("America/Bogota")).toInstant());
+		return dateCreacionSolicitud;
 	}
 
 	/**
