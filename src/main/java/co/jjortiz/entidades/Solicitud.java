@@ -40,7 +40,6 @@ public class Solicitud {
 	
     @Column(name = "fecha_hora")
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonbDateFormat(value ="yyyy-MM-dd HH:mm")
     private Date fechaHora;
     
     @ManyToOne
