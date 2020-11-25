@@ -3,6 +3,8 @@ package co.alertroom.ws.rest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class NovedadService {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response registrarNovedad(Novedad novedad){
-		novedad.setFechaHora(new Date());
+		novedad.setFechaHora(setearFechaHora());
 		try {
 			String res = misNovedades.registroNovedad(novedad);
 			if (res.equals("ok")) {
@@ -44,6 +46,12 @@ public class NovedadService {
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
+	}
+	
+	private Date setearFechaHora() {
+		LocalDateTime date = LocalDateTime.now();
+		Date dateCreacionNovedad = Date.from(date.atZone(ZoneId.of("America/Bogota")).toInstant());
+		return dateCreacionNovedad;
 	}
 
 	//http://localhost:8080/AlertRoomWebServices/api/novedades/listarNovedades

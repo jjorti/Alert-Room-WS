@@ -54,9 +54,7 @@ public class NovedadDao {
 
 	public List<NovedadVo> listarNovedadesporfechaAmbiente(Date fechaHorai, Date fechaHoraf, String idAmbiente) {
 		NovedadesDAO novedadesDaoJpa = new NovedadesDAO();
-		AmbienteAdapter miAmbienteAdapter = new AmbienteAdapter();
-		Ambiente numAmb=miAmbienteAdapter.asignarId(idAmbiente);
-		List<Novedad> listaNovedadesJpa =  novedadesDaoJpa.listarNovedadesporfechaAmbiente(fechaHorai,fechaHoraf,numAmb);
+		List<Novedad> listaNovedadesJpa =  novedadesDaoJpa.listarNovedadesporfechaAmbiente(fechaHorai,fechaHoraf,idAmbiente);
 		NovedadAdapter miNovedadAdapter = new NovedadAdapter();
 		List<NovedadVo> listaNovedadesVo = miNovedadAdapter.asignarListaNovedades(listaNovedadesJpa);
 		return listaNovedadesVo;

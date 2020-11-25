@@ -124,4 +124,22 @@ public class SolicitudesDAO implements Serializable{
 		return listaNovedades;
 	}
 
+	public Solicitud consultarSolicitudInstructor(String idInstructor, String idAmbiente) {
+		try {
+			Solicitud solicitud = new Solicitud();
+			String sentence =  "SELECT s FROM  Solicitud s WHERE s.concepto.idConcepto = ?1 and s.idUsuario.id = ?2 and s.idAmbiente.id = ?3";
+			Query query= entityManager.createQuery(sentence);
+			query.setParameter(1, 4);
+			query.setParameter(2, idInstructor);
+			query.setParameter(3, idAmbiente);
+			
+			solicitud =  (Solicitud) query.getSingleResult();
+			return solicitud;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
+	}
+
 }

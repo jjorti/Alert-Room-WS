@@ -70,7 +70,7 @@ public class NovedadesDAO implements Serializable {
 		return listaNovedades;
 	}
 
-	public List<Novedad> listarNovedadesporfechaAmbiente(java.util.Date fechaHorai, java.util.Date fechaHoraf, Ambiente idAmbiente) {
+	public List<Novedad> listarNovedadesporfechaAmbiente(java.util.Date fechaHorai, java.util.Date fechaHoraf, String idAmbiente) {
 		List<Novedad> listaNovedades = new ArrayList<Novedad>();
 		try {
 			String jpql = "SELECT n FROM Novedad n WHERE n.idAmbiente.id = :numAmbiente AND n.fechaHora BETWEEN :dateInicio and :dateFinal ";

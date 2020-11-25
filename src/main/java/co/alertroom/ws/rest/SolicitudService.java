@@ -94,7 +94,7 @@ public class SolicitudService {
 	@Path("/solicitarllaves")
 	@Consumes({MediaType.APPLICATION_JSON})
 	public Response solicitudLlave(Solicitud solicitud) {
-		solicitud.setFechaHora( seterarFechaHora() );
+		solicitud.setFechaHora( setearFechaHora() );
 		try {
 			String res = solicitudDao.solicitudLLaves(solicitud);
 			if (res.equals("ok")) {
@@ -107,7 +107,7 @@ public class SolicitudService {
 		}
 	}
 
-	private Date seterarFechaHora() {
+	private Date setearFechaHora() {
 		LocalDateTime date = LocalDateTime.now();
 		Date dateCreacionSolicitud = Date.from(date.atZone(ZoneId.of("America/Bogota")).toInstant());
 		return dateCreacionSolicitud;
@@ -168,7 +168,7 @@ public class SolicitudService {
 	@Path("/solicitarNovedad")
 	@Consumes({MediaType.APPLICATION_JSON})
 	public Response solicitudNovedad(Solicitud solicitud) {
-		solicitud.setFechaHora( new Date());
+		solicitud.setFechaHora( setearFechaHora());
 		try {
 			String res = solicitudDao.solicitudNovedad(solicitud);
 			if (res.equals("ok")) {
@@ -183,21 +183,33 @@ public class SolicitudService {
 
 	//http://localhost:8080/AlertRoomWebServices/api/solicitudes/rotacion/35
 	@POST
-	@Path("/rotacion/{id}")
+	@Path("/rotacion/{idInstructor}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
-	public Response rotacionLlaves(@PathParam("id") int idSolicitud, Solicitud solicitud) {
-
-		solicitud.setFechaHora(new Date());
+	public Response rotarLlaves(@PathParam("idInstructor") String idInstructor, Solicitud solicitud) {
+		System.out.println("ahsidhas");
+		solicitud.setFechaHora(setearFechaHora());
 		try {
-			String res = solicitudDao.rotacionLlaves(idSolicitud, solicitud);
+			String res = solicitudDao.rotarLlaves(idInstructor, solicitud);
 			if (res.equals("ok")) {
 				return Response.ok().build();				
 			}else {
-				return Response.status(Response.Status.NOT_FOUND).build();	
+				co.jjortiz.aplicacion.Response respuesta = new co.jjortiz.aplicacion.Response();
+				if (res.equals("error1")) {
+					respuesta.setResponse("El ambiente ingresado no le pertenece al instructor, debé ingresar el ambiente del cual tiene las llaves");
+					return Response.status(Response.Status.NOT_FOUND).entity(respuesta).build();	
+				}else {
+					if (res.equals("error2")) {
+						respuesta.setResponse("El ambiente no esta disponble para prestamo");
+						return Response.status(Response.Status.NOT_FOUND).entity(respuesta).build();	
+					}else {
+						return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+					}
+				}
 			}
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+
 }

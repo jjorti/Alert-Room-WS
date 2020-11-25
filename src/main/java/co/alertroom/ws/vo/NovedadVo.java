@@ -6,7 +6,7 @@ public class NovedadVo {
 	
 	private Integer idNovedad;
 	
-	private Date fechaHora;
+	private String fechaHora;
 	
 	private AmbienteVo idAmbiente;
 
@@ -24,12 +24,12 @@ public class NovedadVo {
 		this.idNovedad = idNovedad;
 	}
 
-	public Date getFechaHora() {
+	public String getFechaHora() {
 		return fechaHora;
 	}
 
-	public void setFechaHora(Date fechaHora) {
-		this.fechaHora = fechaHora;
+	public void setFechaHora(String string) {
+		this.fechaHora = string;
 	}
 
 	public AmbienteVo getIdAmbiente() {

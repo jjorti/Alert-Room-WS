@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import co.jjortiz.aplicacion.JPAUtil;
 import co.jjortiz.entidades.Usuario;
 
@@ -25,7 +27,8 @@ public class UsuariosDAO implements Serializable{
 	 */
 	public Usuario consultarLoginUsuario(String id, String contrasena) {
 		Usuario miUsuario=entityManager.find(Usuario.class, id);
-		if (miUsuario!=null && miUsuario.getEstado().equals("A")) {
+		boolean correcto = DigestUtils.md5Hex(contrasena).equals( miUsuario.getContrasena());
+		if (miUsuario!=null && miUsuario.getEstado().equals("A") && correcto) {
 			return miUsuario;
 		}else {
 			miUsuario=null;

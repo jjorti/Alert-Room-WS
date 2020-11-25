@@ -114,7 +114,7 @@ public class SolicitudDao{
 	public String entregaLlavesInstructor(int idSolicitud) {
 		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
 		Solicitud solicitudJpa = solicitudesDaoJpa.consultarSolicitud(idSolicitud);
-		solicitudJpa.setObservaciones("Llaves en ambiente");
+		solicitudJpa.setObservaciones("Llaves en ambiente entregadas por guarda");
 		Concepto miConcepto = new Concepto();
 		miConcepto.setIdConcepto(4);
 		solicitudJpa.setConcepto(miConcepto);
@@ -124,7 +124,7 @@ public class SolicitudDao{
 	public String devolverLlavesGuarda(Integer idSolicitud) {
 		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
 		Solicitud solicitudJpa = solicitudesDaoJpa.consultarSolicitud(idSolicitud);
-		solicitudJpa.setObservaciones("Entregó llaves");
+		solicitudJpa.setObservaciones("Entregó llaves al guarda");
 		
 		AmbientesDAO ambientesDaoJpa = new AmbientesDAO();
 		Ambiente miAmbiente = ambientesDaoJpa.consultarAmbiente(solicitudJpa.getIdAmbiente().getId());
@@ -146,5 +146,49 @@ public class SolicitudDao{
 		}
 		return res;
 	}
+
+	public String rotarLlaves(String idInstructor, Solicitud solicitud) {
+		System.out.println("rotar llaves");
+		String res = "error";
+		SolicitudesDAO solicitudDAO = new SolicitudesDAO();
+		System.out.println("voy a consultar si existe una solicitud para el instructor de concepto 4");
+		Solicitud solicitudInstructor = solicitudDAO.consultarSolicitudInstructor(idInstructor, solicitud.getIdAmbiente().getId());
+		System.out.println("si existe");
+		if (solicitudInstructor != null) {
+			System.out.println("no es null");
+			res = devolverLlavesGuarda(solicitudInstructor.getIdSolicitud());
+			if (res.equals("ok")) {
+				res=entregarLlavesRotacion(solicitud);
+				return res;
+			}			
+		}else {
+			System.out.println("es null");
+			res = "error1";
+			
+		}
+		return res;
+	}
+
+	private String entregarLlavesRotacion(Solicitud solicitud) {
+		String res = "";
+		SolicitudesDAO solicitudesDaoJpa = new SolicitudesDAO();
+		AmbientesDAO ambientesDaoJpa = new AmbientesDAO();
+		Ambiente miAmbiente = ambientesDaoJpa.consultarAmbiente(solicitud.getIdAmbiente().getId());
+		if (miAmbiente != null && !miAmbiente.getEstado().equals("I")) {			
+			miAmbiente.setOcupado("S");
+			solicitud.setIdAmbiente(miAmbiente);
+			solicitud.setObservaciones("Llaves en ambiente entregadas por rotacion");
+			Concepto miConcepto = new Concepto();
+			miConcepto.setIdConcepto(4);
+			solicitud.setConcepto(miConcepto);
+			res =solicitudesDaoJpa.solicitudLlaves(solicitud);
+			solicitudesDaoJpa.close();
+			return res;
+		}else {
+			return "error2";
+		}
+	}
+	
+
 
 }
