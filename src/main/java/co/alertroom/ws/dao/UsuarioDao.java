@@ -35,10 +35,7 @@ public class UsuarioDao {
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa= new UsuariosDAO();
 		String resp="";
 		if(usuarioDaoJpa.consultarUsuario(documento)!=null){
-			UsuarioAdapter usuarioAdapter = new UsuarioAdapter();
-			Usuario miUsuario = usuarioAdapter.actualizarUsuario(usuario);
-			resp=usuarioDaoJpa.actualizarUsuario(miUsuario);
-			
+			resp=usuarioDaoJpa.actualizarUsuario(usuario);	
 		}
 		usuarioDaoJpa.close();
 		return resp;
@@ -68,10 +65,13 @@ public class UsuarioDao {
 	}
 	
 	
-	public List<Usuario> listarUsuarios() {
+	public List<UsuarioVo> listarUsuarios() {
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa = new co.jjortiz.dao.UsuariosDAO();
+		UsuarioAdapter usuarioAdapter = new UsuarioAdapter();
+		List<Usuario> listaUsuario = usuarioDaoJpa.listarUsuarios();
+		List<UsuarioVo> listaUsuarioVo = usuarioAdapter.asignarListaUsuario(listaUsuario);
 		usuarioDaoJpa.close();
-		return usuarioDaoJpa.listarUsuarios();
+		return listaUsuarioVo;
 	}
 
 }

@@ -13,6 +13,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import co.alertroom.ws.dao.UsuarioDao;
 import co.alertroom.ws.vo.UsuarioVo;
 import co.jjortiz.aplicacion.EnvioEmail;
@@ -27,7 +29,6 @@ public class UsuariosService {
 
 	//http://localhost:8080/AlertRoomWebServices/api/usuarios/login
 	
-	
 	@POST
 	@Path("/login")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -35,7 +36,6 @@ public class UsuariosService {
 	public Response validarUsuario(UsuarioVo usuarioVo) {
 		System.out.println("1");
 		UsuarioVo miUsuarioVo=miUsuarioDao.consultarLoginUsuario(usuarioVo.getId(), usuarioVo.getContrasena());
-		
 		try {
 			if (miUsuarioVo!=null) {
 				return Response.status(Response.Status.OK).entity(miUsuarioVo).build();
@@ -50,11 +50,7 @@ public class UsuariosService {
 			
 	}
 	
-	
-
 	//http://localhost:8080/AlertRoomWebServices/api/usuarios/registrarPersona
-		
-	
 	@POST
 	@Path("/registrarPersona")
 	@Consumes({MediaType.APPLICATION_JSON})
@@ -79,12 +75,12 @@ public class UsuariosService {
 	
 	
 	//http://localhost:8080/AlertRoomWebServices/api/usuarios/123
-	
 	@PUT
 	@Path("/{id}")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response actualizarUsuario(@PathParam("id") String documento, Usuario usuario) {
+		usuario.setContrasena(DigestUtils.md5Hex(usuario.getContrasena()));
 		try {
 			String resp=miUsuarioDao.actualizarUsuario(documento,usuario);
 			if(resp.equals("Persona Actualizada!")) {
@@ -134,8 +130,8 @@ public class UsuariosService {
 	@GET
 	@Path("/listarUsuarios")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Usuario> ListarUsuarios(){
-		List<Usuario> lista = miUsuarioDao.listarUsuarios();
+	public List<UsuarioVo> ListarUsuarios(){
+		List<UsuarioVo> lista = miUsuarioDao.listarUsuarios();
 		return lista;
 	}
 		

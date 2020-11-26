@@ -1,5 +1,8 @@
 package co.alertroom.ws.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import co.alertroom.ws.vo.UsuarioVo;
@@ -107,6 +110,14 @@ public class UsuarioAdapter {
 			miUsuario.setId(u.getId());
 		}
 		return miUsuario;
+	}
+
+	public List<UsuarioVo> asignarListaUsuario(List<Usuario> listaUsuario) {
+		List<UsuarioVo> listaUsuarios = new ArrayList<UsuarioVo>();
+		for (Usuario usuario : listaUsuario) {
+			listaUsuarios.add(asignarUsuario(usuario));
+		}
+		return listaUsuarios;
 	}
 	
 }
