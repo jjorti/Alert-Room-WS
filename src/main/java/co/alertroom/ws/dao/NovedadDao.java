@@ -48,7 +48,7 @@ public class NovedadDao {
 		List<Novedad> listaNovedadesJpa =  novedadesDaoJpa.listarNovedadesporfecha(fechaHorai,fechaHoraf);
 		NovedadAdapter miNovedadAdapter = new NovedadAdapter();
 		List<NovedadVo> listaNovedadesVo = miNovedadAdapter.asignarListaNovedades(listaNovedadesJpa);
-
+		novedadesDaoJpa.close();
 		return listaNovedadesVo;
 	}
 
@@ -57,6 +57,7 @@ public class NovedadDao {
 		List<Novedad> listaNovedadesJpa =  novedadesDaoJpa.listarNovedadesporfechaAmbiente(fechaHorai,fechaHoraf,idAmbiente);
 		NovedadAdapter miNovedadAdapter = new NovedadAdapter();
 		List<NovedadVo> listaNovedadesVo = miNovedadAdapter.asignarListaNovedades(listaNovedadesJpa);
+		novedadesDaoJpa.close();
 		return listaNovedadesVo;
 	}
 
@@ -83,6 +84,7 @@ public class NovedadDao {
 			novedadesDaoJpa.close();
 			return res;
 		}else {
+			novedadesDaoJpa.close();
 			return res;
 		}
 	}

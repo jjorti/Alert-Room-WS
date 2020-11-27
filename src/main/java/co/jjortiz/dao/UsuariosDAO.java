@@ -26,14 +26,19 @@ public class UsuariosDAO implements Serializable{
 	 * @return Usuario si existe , null si no existe
 	 */
 	public Usuario consultarLoginUsuario(String id, String contrasena) {
-		Usuario miUsuario=entityManager.find(Usuario.class, id);
-		boolean correcto = DigestUtils.md5Hex(contrasena).equals( miUsuario.getContrasena());
-		if (miUsuario!=null && miUsuario.getEstado().equals("A") && correcto) {
-			return miUsuario;
-		}else {
-			miUsuario=null;
-			return miUsuario;
+		try {
+			Usuario miUsuario=entityManager.find(Usuario.class, id);
+			boolean correcto = DigestUtils.md5Hex(contrasena).equals( miUsuario.getContrasena());
+			if (miUsuario!=null && miUsuario.getEstado().equals("A") && correcto) {
+				return miUsuario;
+			}else {
+				miUsuario=null;
+				return miUsuario;
+			}
+		} catch (Exception e) {
+			return null;
 		}
+		
 	}
 	
 
@@ -58,12 +63,17 @@ public class UsuariosDAO implements Serializable{
 	}
 
 	public Usuario consultarUsuario(String documento) {
-		Usuario miUsuario=entityManager.find(Usuario.class,documento);
-		if (miUsuario!=null) {
-			return miUsuario;
-		}else {
+		try {
+			Usuario miUsuario=entityManager.find(Usuario.class,documento);
+			if (miUsuario!=null) {
+				return miUsuario;
+			}else {
+				return null;
+			}
+		}catch (Exception e) {
 			return null;
 		}
+		
 	}
 	
 	public String actualizarUsuario(Usuario miUsuario) {
@@ -96,9 +106,14 @@ public class UsuariosDAO implements Serializable{
 	}
 	
 	public List<Usuario> listarUsuarios(){
-		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		Query query = entityManager.createQuery("SELECT u FROM Usuario u");
-		listaUsuarios = query.getResultList();
-		return listaUsuarios;
+		try {
+			List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+			Query query = entityManager.createQuery("SELECT u FROM Usuario u");
+			listaUsuarios = query.getResultList();
+			return listaUsuarios;
+		}catch (Exception e) {
+			return null;
+		}
+		
 	}
 }

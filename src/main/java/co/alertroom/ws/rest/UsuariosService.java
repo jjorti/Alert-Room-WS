@@ -34,7 +34,6 @@ public class UsuariosService {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response validarUsuario(UsuarioVo usuarioVo) {
-		System.out.println("1");
 		UsuarioVo miUsuarioVo=miUsuarioDao.consultarLoginUsuario(usuarioVo.getId(), usuarioVo.getContrasena());
 		try {
 			if (miUsuarioVo!=null) {

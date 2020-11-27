@@ -12,7 +12,6 @@ import co.jjortiz.entidades.Usuario;
 public class UsuarioDao {
 
 	public UsuarioVo consultarLoginUsuario(String id, String contrasena) {
-		System.out.println("2");
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa= new UsuariosDAO();
 		Usuario usuarioJpa = usuarioDaoJpa.consultarLoginUsuario(id,contrasena);
 		UsuarioAdapter usuarioAdapter = new UsuarioAdapter();

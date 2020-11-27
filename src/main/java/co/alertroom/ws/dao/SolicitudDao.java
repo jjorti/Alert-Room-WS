@@ -43,6 +43,7 @@ public class SolicitudDao{
 		SolicitudAdapter miSolicitudAdapter = new SolicitudAdapter();
 		List<Solicitud> solicitudJPA = solicitudesDaoJpa.obtenerSolicitudesAmbiente(idAmbiente);
 		List<SolicitudVo> solicitudVo =  miSolicitudAdapter.asignarListaSolicitudesGuarda(solicitudJPA);
+		solicitudesDaoJpa.close();
 		return solicitudVo;
 	}
 	
@@ -118,7 +119,9 @@ public class SolicitudDao{
 		Concepto miConcepto = new Concepto();
 		miConcepto.setIdConcepto(4);
 		solicitudJpa.setConcepto(miConcepto);
-		return solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
+		String res = solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
+		solicitudesDaoJpa.close();
+		return res;
 	}
 
 	public String devolverLlavesGuarda(Integer idSolicitud) {
@@ -134,7 +137,10 @@ public class SolicitudDao{
 		Concepto miConcepto = new Concepto();
 		miConcepto.setIdConcepto(2);
 		solicitudJpa.setConcepto(miConcepto);
-		return solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
+		
+		String res = solicitudesDaoJpa.actualizarSolicitud(solicitudJpa);
+		solicitudesDaoJpa.close();
+		return res;
 	}
 
 	public String rotacionLlaves(int idSolicitud, Solicitud solicitud) {
@@ -148,23 +154,18 @@ public class SolicitudDao{
 	}
 
 	public String rotarLlaves(String idInstructor, Solicitud solicitud) {
-		System.out.println("rotar llaves");
 		String res = "error";
 		SolicitudesDAO solicitudDAO = new SolicitudesDAO();
-		System.out.println("voy a consultar si existe una solicitud para el instructor de concepto 4");
 		Solicitud solicitudInstructor = solicitudDAO.consultarSolicitudInstructor(idInstructor, solicitud.getIdAmbiente().getId());
-		System.out.println("si existe");
 		if (solicitudInstructor != null) {
-			System.out.println("no es null");
 			res = devolverLlavesGuarda(solicitudInstructor.getIdSolicitud());
 			if (res.equals("ok")) {
 				res=entregarLlavesRotacion(solicitud);
+				solicitudDAO.close();
 				return res;
 			}			
 		}else {
-			System.out.println("es null");
 			res = "error1";
-			
 		}
 		return res;
 	}

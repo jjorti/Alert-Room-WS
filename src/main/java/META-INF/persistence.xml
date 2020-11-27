@@ -13,9 +13,11 @@
 		<!-- <class> com.alert_room.model.Usuario</class> -->
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url"	value="jdbc:mysql://localhost:3306/alert_room_prueba?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=America/Bogota" />
-			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.url"	
+					  value="jdbc:mysql://b66b0e3a89921c:a773710d@us-cdbr-east-02.cleardb.com/heroku_f6f3ccc2ebb8533?
+					  useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=America/Bogota" />
+			<property name="javax.persistence.jdbc.user" value="b66b0e3a89921c" />
+			<property name="javax.persistence.jdbc.password" value="a773710d" />
 			<property name="hibernate.show_sql" value="drop-and-create" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>

@@ -49,7 +49,10 @@ public class AmbienteDao {
 
 	public Ambiente actualizarAmbiente(Ambiente ambiente) {
 		co.jjortiz.dao.AmbientesDAO ambienteDaoJpa = new co.jjortiz.dao.AmbientesDAO ();
-		return ambienteDaoJpa.actualizarAmbiente(ambiente);
+		Ambiente miAmbiente =  new Ambiente();
+		miAmbiente = ambienteDaoJpa.actualizarAmbiente(ambiente);
+		ambienteDaoJpa.close();
+		return miAmbiente;
 	}
 
 	public AmbienteVo consultarAmbienteInstructor(String idAmbiente) {
