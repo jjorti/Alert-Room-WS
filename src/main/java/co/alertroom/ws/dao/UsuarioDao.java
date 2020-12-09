@@ -3,6 +3,8 @@ package co.alertroom.ws.dao;
 
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import co.alertroom.ws.adapter.UsuarioAdapter;
 import co.alertroom.ws.vo.UsuarioVo;
 import co.jjortiz.dao.UsuariosDAO;
@@ -20,21 +22,29 @@ public class UsuarioDao {
 		return usuarioVo;
 	}
 
-	public String registrarUsuario(UsuarioVo usuarioVo) {
+	public String registrarUsuario(Usuario usuario) {
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa= new UsuariosDAO();
-		String mensaje="";
-		UsuarioAdapter usuarioAdapter = new UsuarioAdapter();
-		Usuario usuarioJpa = usuarioAdapter.obtenerUsuario(usuarioVo);
-		mensaje=usuarioDaoJpa.registrarUsuario(usuarioJpa);
+		String mensaje = "";
+		usuario.setContrasena(DigestUtils.md5Hex(usuario.getContrasena()));
+		mensaje = usuarioDaoJpa.registrarUsuario(usuario);
 		usuarioDaoJpa.close();
 		return mensaje;
 	}
 
+	
+	
 	public String actualizarUsuario(String documento, Usuario usuario) {
 		co.jjortiz.dao.UsuariosDAO usuarioDaoJpa= new UsuariosDAO();
 		String resp="";
-		if(usuarioDaoJpa.consultarUsuario(documento)!=null){
-			resp=usuarioDaoJpa.actualizarUsuario(usuario);	
+		Usuario usuarioConsultado = usuarioDaoJpa.consultarUsuario(documento);
+		if(usuarioConsultado!=null){
+			
+			if (usuarioConsultado.getContrasena().equals(usuario.getContrasena())) {
+				resp=usuarioDaoJpa.actualizarUsuario(usuario);					
+			}else {
+				usuario.setContrasena(DigestUtils.md5Hex(usuario.getContrasena()));
+				resp = usuarioDaoJpa.actualizarUsuario(usuario);
+			}
 		}
 		usuarioDaoJpa.close();
 		return resp;

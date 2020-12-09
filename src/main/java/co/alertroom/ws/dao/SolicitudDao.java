@@ -53,8 +53,7 @@ public class SolicitudDao{
 		AmbientesDAO ambientesDaoJpa = new AmbientesDAO();
 		Ambiente miAmbiente = ambientesDaoJpa.consultarAmbiente(solicitud.getIdAmbiente().getId());
 
-		if (miAmbiente != null && !miAmbiente.getOcupado().equals("N")) {	
-			miAmbiente.setOcupado("S");
+		if (miAmbiente != null && miAmbiente.getOcupado().equals("S")) {	
 			solicitud.setIdAmbiente(miAmbiente);
 			res =solicitudesDaoJpa.solicitudNoveda(solicitud);
 			solicitudesDaoJpa.close();

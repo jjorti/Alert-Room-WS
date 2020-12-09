@@ -54,12 +54,12 @@ public class UsuariosService {
 	@Path("/registrarPersona")
 	@Consumes({MediaType.APPLICATION_JSON})
 	//@Produces({MediaType.APPLICATION_JSON})
-	public Response registrarPersona(UsuarioVo usuarioVo) {
+	public Response registrarPersona(Usuario usuario) {
 		try {
-			String res = miUsuarioDao.registrarUsuario(usuarioVo);
+			String res = miUsuarioDao.registrarUsuario(usuario);
 			if (res.equals("ok")) {
 				EnvioEmail miEnvioEmail = new EnvioEmail();
-				miEnvioEmail.sendEmail(usuarioVo);
+				miEnvioEmail.sendEmail(usuario);
 				return Response.ok().build();
 				//return Response.status(Response.Status.OK).entity(persona).build();
 			}else {
@@ -79,12 +79,11 @@ public class UsuariosService {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response actualizarUsuario(@PathParam("id") String documento, Usuario usuario) {
-		usuario.setContrasena(DigestUtils.md5Hex(usuario.getContrasena()));
+
 		try {
 			String resp=miUsuarioDao.actualizarUsuario(documento,usuario);
 			if(resp.equals("Persona Actualizada!")) {
 				return Response.ok().build();
-				//return Response.status(Response.Status.OK).entity(persona).build();
 			}else {
 				return Response.status(Response.Status.NOT_FOUND).build();
 			}

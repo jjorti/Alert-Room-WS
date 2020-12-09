@@ -187,7 +187,6 @@ public class SolicitudService {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response rotarLlaves(@PathParam("idInstructor") String idInstructor, Solicitud solicitud) {
-		System.out.println("ahsidhas");
 		solicitud.setFechaHora(setearFechaHora());
 		try {
 			String res = solicitudDao.rotarLlaves(idInstructor, solicitud);

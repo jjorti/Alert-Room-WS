@@ -53,10 +53,9 @@ public class UsuariosDAO implements Serializable{
 			entityManager.getTransaction().begin();
 			entityManager.persist(miUsuario);
 			entityManager.getTransaction().commit();
-			
 			resp="ok";
 		} catch (Exception e) {
-			
+			resp="error";
 		}
 	
 		return resp;

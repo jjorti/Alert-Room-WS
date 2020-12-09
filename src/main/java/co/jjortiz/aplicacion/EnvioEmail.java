@@ -25,26 +25,26 @@ public class EnvioEmail {
 		properties.put("mail.smtp.user", "alertroomapplication@gmail.com");
 		properties.put("mail.smtp.auth", "true");
 
-		System.out.println("coloque propiedades");
 		session = Session.getDefaultInstance(properties);
 	}
 	
-	public void sendEmail(UsuarioVo usuarioVo){
+	public void sendEmail(Usuario usuario){
 
 		init();
 		try{
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress((String)properties.get("mail.smtp.mail.sender")));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(usuarioVo.getEmail()));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getEmail()));
 			message.setSubject("Bienvenido a Alert Room");
 			message.setText("\r\n"  
 					+ "Armenia -  Quindio "
 					+"\r\n"  
 					+"\r\n"  
-					+ "Nos complace informarle Sr(a) "+ usuarioVo.getNombres()+ " "+usuarioVo.getApellidos()+" que ya se encuentra registrado en nuestro sistema,"
-					+ "para logearse por favor ingrese con su numero de documento y de igual forma digite este en el campo de contrasena, por ultimo le recomendamos"
-					+ "que actualice la contraseña inmediatamente se logee para evitar que otra persona ingrese a su cuenta, gracias por hacer parte de Alert Room."
-					+"\r\n"  
+					+ "Nos complace informarle Sr(a) "+ usuario.getNombres()+ " "+usuario.getApellidos()+" que ya se encuentra registrado en nuestro sistema, "
+					+ "para loguearse por favor ingrese con su número de documento y de igual forma digite este en el campo de contrasena, por último le recomendamos "
+					+ "que actualice la contraseña inmediatamente se loguee, para evitar que otra persona ingrese a su cuenta, gracias por hacer parte de Alert Room."
+					+"\r\n"
+					+"\r\n"
 					+ "Alerta: Este mensaje ha sido enviado automáticamente, por favor no responder.\r\n" + 
 					"\r\n" + 
 					"\r\n" + 
@@ -59,9 +59,7 @@ public class EnvioEmail {
 			t.connect((String)properties.get("mail.smtp.user"), password);
 			t.sendMessage(message, message.getAllRecipients());
 			t.close();
-			System.out.println("finalizo");
 		}catch (MessagingException me){
-			System.out.println(me.getMessage());
                         //Aqui se deberia o mostrar un mensaje de error o en lugar
                         //de no hacer nada con la excepcion, lanzarla para que el modulo
                         //superior la capture y avise al usuario con un popup, por ejemplo.
